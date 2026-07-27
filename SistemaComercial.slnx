@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SistemaComercial.API/SistemaComercial.API.csproj" />
+    <Project Path="src/SistemaComercial.Application/SistemaComercial.Application.csproj" />
+    <Project Path="src/SistemaComercial.Domain/SistemaComercial.Domain.csproj" />
+    <Project Path="src/SistemaComercial.Infrastructure/SistemaComercial.Infrastructure.csproj" />
+    <Project Path="src/SistemaComercial.Shared/SistemaComercial.Shared.csproj" />
+  </Folder>
+</Solution>
