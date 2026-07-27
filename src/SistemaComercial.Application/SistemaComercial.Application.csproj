@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SistemaComercial.Domain\SistemaComercial.Domain.csproj" />
     <ProjectReference Include="..\SistemaComercial.Shared\SistemaComercial.Shared.csproj" />
+    <ProjectReference Include="..\SistemaComercial.Infrastructure\SistemaComercial.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
