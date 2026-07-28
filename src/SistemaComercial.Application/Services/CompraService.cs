@@ -119,9 +119,8 @@ public class CompraService : ICompraService
                     producto.MargenGanancia = 0;
                 }
 
-                //-----------------------------------
-                // MOVIMIENTO STOCK
-                //-----------------------------------
+
+                // MOVIMIENTO STOCK                
 
                /* MovimientoStock movimiento = new()
                 {
