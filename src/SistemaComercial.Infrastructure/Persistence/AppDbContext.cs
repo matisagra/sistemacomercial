@@ -11,10 +11,13 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Rol> Roles => Set<Rol>();
-    
+
     //public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Categoria> Categorias => Set<Categoria>();
     public DbSet<Marca> Marcas => Set<Marca>();
+    public DbSet<FormaPago> FormasPago => Set<FormaPago>();
+    public DbSet<Cliente> Clientes => Set<Cliente>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
