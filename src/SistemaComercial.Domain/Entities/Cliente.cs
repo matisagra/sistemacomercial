@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace SistemaComercial.Domain.Entities;
 
 public class Cliente
@@ -12,9 +14,10 @@ public class Cliente
     public string Telefono { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Direccion { get; set; } = string.Empty;
-    public string Observaciones { get; set; } = string.Empty;
+    public string? Observaciones { get; set; } = string.Empty;
     public bool Estado { get; set; } = true;
 
     // Navegación
-     // public ICollection<Venta> Ventas { get; set; } = new List<Venta>();
+    [JsonIgnore]
+    public ICollection<Venta> Ventas { get; set; } = new List<Venta>();
 }

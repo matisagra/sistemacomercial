@@ -22,7 +22,8 @@ public class AppDbContext : DbContext
 
     public DbSet<Compra> Compras => Set<Compra>();
     public DbSet<DetalleCompra> DetallesCompra => Set<DetalleCompra>();
-
+    public DbSet<Venta> Ventas => Set<Venta>();
+    public DbSet<DetalleVenta> DetallesVenta => Set<DetalleVenta>();
 
 
 
@@ -32,7 +33,9 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ProductoConfiguration());
         modelBuilder.ApplyConfiguration(new CompraConfiguration());
         modelBuilder.ApplyConfiguration(new DetalleCompraConfiguration());
-
+        modelBuilder.ApplyConfiguration(new VentaConfiguration());
+        modelBuilder.ApplyConfiguration(new DetalleVentaConfiguration());
+        
         base.OnModelCreating(modelBuilder);
 
         

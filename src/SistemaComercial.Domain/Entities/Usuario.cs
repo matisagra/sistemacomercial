@@ -31,4 +31,7 @@ public class Usuario
 
     [JsonIgnore]
     public ICollection<Compra>? Compras { get; set; } = new List<Compra>();
+
+    [JsonIgnore]
+    public ICollection<Venta>? Ventas { get; set; } = new List<Venta>();
 }
