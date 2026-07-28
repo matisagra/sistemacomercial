@@ -35,7 +35,7 @@ public class Producto
 
     public bool Estado { get; set; }
 
-    // public ICollection<DetalleCompra> DetallesCompra { get; set; } = [];
+    public ICollection<DetalleCompra> DetallesCompra { get; set; } = [];
 
     // public ICollection<DetalleVenta> DetallesVenta { get; set; } = [];
 

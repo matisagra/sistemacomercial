@@ -18,5 +18,5 @@ public class Proveedor
     public bool Estado { get; set; } = true;
 
     // Navegación
-     // public ICollection<Compra> Compras { get; set; } = new List<Compra>();
+     public ICollection<Compra> Compras { get; set; } = new List<Compra>();
 }

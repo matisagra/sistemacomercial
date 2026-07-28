@@ -20,13 +20,18 @@ public class AppDbContext : DbContext
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Producto> Productos => Set<Producto>();
 
+    public DbSet<Compra> Compras => Set<Compra>();
+    public DbSet<DetalleCompra> DetallesCompra => Set<DetalleCompra>();
+
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         modelBuilder.ApplyConfiguration(new ProductoConfiguration());
-    
+        modelBuilder.ApplyConfiguration(new CompraConfiguration());
+        modelBuilder.ApplyConfiguration(new DetalleCompraConfiguration());
 
         base.OnModelCreating(modelBuilder);
 

@@ -28,4 +28,7 @@ public class Usuario
 
     [JsonIgnore] //para poder crear un usuario sin necesidad de enviar el rol, ya que el rol se asigna automáticamente al crear un usuario
     public virtual Rol? Rol { get; set; }
+
+    [JsonIgnore]
+    public ICollection<Compra>? Compras { get; set; } = new List<Compra>();
 }
