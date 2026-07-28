@@ -53,6 +53,7 @@ builder.Services.AddScoped<IProveedorService, ProveedorService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>

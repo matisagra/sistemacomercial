@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaComercial.Domain.Entities;
+using SistemaComercial.Infrastructure.Persistence.Configurations;
 
 namespace SistemaComercial.Infrastructure.Persistence;
 
@@ -17,13 +18,14 @@ public class AppDbContext : DbContext
     public DbSet<Cliente> Clientes => Set<Cliente>();
     public DbSet<Proveedor> Proveedores => Set<Proveedor>();
     public DbSet<Usuario> Usuarios => Set<Usuario>();
+    public DbSet<Producto> Productos => Set<Producto>();
 
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-
+        modelBuilder.ApplyConfiguration(new ProductoConfiguration());
     
 
         base.OnModelCreating(modelBuilder);

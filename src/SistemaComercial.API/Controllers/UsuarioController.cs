@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaComercial.Application.Interfaces;
 using SistemaComercial.Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 namespace SistemaComercial.API.Controllers;
 
-[Authorize]
+
 [ApiController]
 [Route("api/[controller]")]
 public class UsuarioController : ControllerBase

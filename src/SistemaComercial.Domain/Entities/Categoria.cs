@@ -11,5 +11,5 @@ public class Categoria
     public bool Estado { get; set; } = true;
 
     // Navegación
-     // public ICollection<Producto> Productos { get; set; } = new List<Producto>();
+    public ICollection<Producto> Productos { get; set; } = new List<Producto>();
 }
