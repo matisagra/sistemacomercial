@@ -56,6 +56,7 @@ builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<ICompraService, CompraService>();
 builder.Services.AddScoped<IVentaService, VentaService>();
+builder.Services.AddScoped<ICajaService, CajaService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

@@ -25,7 +25,7 @@ public class AppDbContext : DbContext
     public DbSet<Venta> Ventas => Set<Venta>();
     public DbSet<DetalleVenta> DetallesVenta => Set<DetalleVenta>();
 
-
+    public DbSet<Caja> Cajas => Set<Caja>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,6 +35,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new DetalleCompraConfiguration());
         modelBuilder.ApplyConfiguration(new VentaConfiguration());
         modelBuilder.ApplyConfiguration(new DetalleVentaConfiguration());
+        modelBuilder.ApplyConfiguration(new CajaConfiguration());
         
         base.OnModelCreating(modelBuilder);
 
