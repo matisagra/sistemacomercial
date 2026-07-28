@@ -12,7 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IRolService, RolService>();
+builder.Services.AddScoped<IRolService, RolService>();  
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IMarcaService, MarcaService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

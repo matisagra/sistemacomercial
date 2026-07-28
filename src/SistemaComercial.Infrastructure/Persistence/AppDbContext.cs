@@ -11,6 +11,10 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Rol> Roles => Set<Rol>();
+    
+    //public DbSet<Usuario> Usuarios => Set<Usuario>();
+    public DbSet<Categoria> Categorias => Set<Categoria>();
+    public DbSet<Marca> Marcas => Set<Marca>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
