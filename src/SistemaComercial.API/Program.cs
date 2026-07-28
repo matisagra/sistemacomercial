@@ -17,6 +17,7 @@ builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();
 builder.Services.AddScoped<IFormaPagoService, FormaPagoService>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IProveedorService, ProveedorService>();
 
 
 
