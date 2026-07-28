@@ -60,7 +60,7 @@ public class ClienteService : IClienteService
         if (cliente == null)
             return false;
 
-        _context.Clientes.Remove(cliente);
+        cliente.Estado = false;
 
         await _context.SaveChangesAsync();
 

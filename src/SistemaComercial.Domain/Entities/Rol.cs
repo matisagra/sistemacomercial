@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization; 
 namespace SistemaComercial.Domain.Entities;
 
 public class Rol
@@ -11,5 +12,6 @@ public class Rol
     public bool Estado { get; set; } = true;
 
     // Navegación
-     // public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+    [JsonIgnore]
+     public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 }
