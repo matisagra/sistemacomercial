@@ -9,10 +9,12 @@ namespace SistemaComercial.Application.Services;
 public class CajaService : ICajaService
 {
     private readonly AppDbContext _context;
+    private readonly IMovimientoCajaService _movimientoCajaService;
 
-    public CajaService(AppDbContext context)
+    public CajaService(AppDbContext context, IMovimientoCajaService movimientoCajaService)
     {
         _context = context;
+        _movimientoCajaService = movimientoCajaService;
     }
 
     public async Task<IEnumerable<Caja>> ObtenerTodasAsync()
@@ -65,6 +67,14 @@ public class CajaService : ICajaService
 
         await _context.SaveChangesAsync();
 
+        await _movimientoCajaService.RegistrarMovimientoAsync(
+        caja.IdCaja,
+        null,
+        "Apertura",
+        "Apertura de caja",
+        caja.SaldoInicial,
+        caja.Observaciones);
+
         return caja;
     }
 
@@ -89,6 +99,14 @@ public class CajaService : ICajaService
         caja.Estado = "Cerrada";
 
         await _context.SaveChangesAsync();
+
+        await _movimientoCajaService.RegistrarMovimientoAsync(
+        caja.IdCaja,
+        null,
+        "Cierre",
+        "Cierre de caja",
+        caja.SaldoFinal ?? 0,
+        caja.Observaciones);
 
         return caja;
     }

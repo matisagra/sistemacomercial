@@ -19,8 +19,8 @@ public class Caja
     public string Estado { get; set; } = "Abierta";
 
     // Navegación
-    // [JsonIgnore]
-    //public ICollection<DetalleCaja> DetallesCaja { get; set; } = [];
+    [JsonIgnore]
+    public ICollection<MovimientoCaja> MovimientosCaja { get; set; } = [];
     
     [JsonIgnore]
     public ICollection<Venta> Ventas { get; set; } = [];

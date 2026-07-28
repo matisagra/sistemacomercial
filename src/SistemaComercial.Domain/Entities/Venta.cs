@@ -16,8 +16,8 @@ public class Venta
 
     public short IdCaja { get; set; }
 
-    //[JsonIgnore]
-   // public Caja? Caja { get; set; }
+    [JsonIgnore]
+    public Caja? Caja { get; set; }
 
     public string? NumeroVenta { get; set; }
 
@@ -29,4 +29,7 @@ public class Venta
 
     [JsonIgnore]
     public ICollection<DetalleVenta> Detalles { get; set; } = [];
+
+    [JsonIgnore]
+    public ICollection<MovimientoCaja> MovimientosCaja { get; set; } = [];
 }

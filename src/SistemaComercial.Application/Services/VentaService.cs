@@ -9,10 +9,12 @@ namespace SistemaComercial.Application.Services;
 public class VentaService : IVentaService
 {
     private readonly AppDbContext _context;
+    private readonly IMovimientoCajaService _movimientoCajaService;
 
-    public VentaService(AppDbContext context)
+    public VentaService(AppDbContext context, IMovimientoCajaService movimientoCajaService)
     {
         _context = context;
+        _movimientoCajaService = movimientoCajaService;
     }
 
     public async Task<IEnumerable<Venta>> ObtenerTodasAsync()
@@ -72,6 +74,16 @@ public class VentaService : IVentaService
                 if (!cliente.Estado)
                     throw new Exception("El cliente está inactivo.");
             }
+
+            // CAJA
+            Caja? caja = await _context.Cajas.FirstOrDefaultAsync(c => c.IdCaja == request.IdCaja);
+
+            if (caja == null)
+                throw new Exception("La caja no existe.");
+
+            if (caja.Estado != "Abierta")
+                throw new Exception("La caja está cerrada.");
+
 
             //---------------------------------------------------
             // CREAR VENTA
@@ -140,15 +152,11 @@ public class VentaService : IVentaService
 
                 _context.DetallesVenta.Add(detalle);
 
-                //---------------------------------------
                 // DESCONTAR STOCK
-                //---------------------------------------
 
                 producto.StockActual -= item.Cantidad;
 
-                //---------------------------------------
                 // ACUMULAR TOTAL
-                //---------------------------------------
 
                 subtotalGeneral += subtotal;
             }
@@ -163,6 +171,14 @@ public class VentaService : IVentaService
                 $"VENT-{DateTime.Now:yyyyMMdd}-{venta.IdVenta:D6}";
 
             await _context.SaveChangesAsync();
+
+            await _movimientoCajaService.RegistrarMovimientoAsync(
+            venta.IdCaja,
+            venta.IdVenta,
+            "Venta",
+            venta.NumeroVenta,
+            venta.SubTotal,
+            null);
 
             await transaction.CommitAsync();
 
