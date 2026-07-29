@@ -9,10 +9,12 @@ namespace SistemaComercial.Application.Services;
 public class CompraService : ICompraService
 {
     private readonly AppDbContext _context;
+    private readonly IMovimientoStockService _movimientoStockService;
 
-    public CompraService(AppDbContext context)
+    public CompraService(AppDbContext context, IMovimientoStockService movimientoStockService)
     {
         _context = context;
+        _movimientoStockService = movimientoStockService;
     }
 
     public async Task<IEnumerable<Compra>> ObtenerTodasAsync()
@@ -107,6 +109,17 @@ public class CompraService : ICompraService
                 int stockAnterior = producto.StockActual;
 
                 producto.StockActual += item.Cantidad;
+
+                await _movimientoStockService.RegistrarMovimientoAsync(
+                producto.IdProducto,
+                idUsuario,
+                compra.IdCompra,
+                null,
+                "Compra",
+                item.Cantidad,
+                stockAnterior,
+                producto.StockActual,
+                $"Compra {compra.NumeroCompra}");
 
                 producto.PrecioCompra = item.PrecioCompra;
 

@@ -10,11 +10,12 @@ public class VentaService : IVentaService
 {
     private readonly AppDbContext _context;
     private readonly IMovimientoCajaService _movimientoCajaService;
-
-    public VentaService(AppDbContext context, IMovimientoCajaService movimientoCajaService)
+    private readonly IMovimientoStockService _movimientoStockService;
+    public VentaService(AppDbContext context, IMovimientoCajaService movimientoCajaService, IMovimientoStockService movimientoStockService)
     {
         _context = context;
         _movimientoCajaService = movimientoCajaService;
+        _movimientoStockService = movimientoStockService;
     }
 
     public async Task<IEnumerable<Venta>> ObtenerTodasAsync()
@@ -22,21 +23,25 @@ public class VentaService : IVentaService
         return await _context.Ventas
             .Include(v => v.Cliente)
             .Include(v => v.Usuario)
-            .Include(v => v.Detalles)
+            .Include(v => v.Caja)
+            .Include(v => v.DetallesVenta)
                 .ThenInclude(d => d.Producto)
+            .Include(v => v.DetallesPago)
+                .ThenInclude(dp => dp.FormaPago)
             .ToListAsync();
     }
-
     public async Task<Venta?> ObtenerPorIdAsync(long id)
     {
         return await _context.Ventas
             .Include(v => v.Cliente)
             .Include(v => v.Usuario)
-            .Include(v => v.Detalles)
+            .Include(v => v.Caja)
+            .Include(v => v.DetallesVenta)
                 .ThenInclude(d => d.Producto)
+            .Include(v => v.DetallesPago)
+                .ThenInclude(dp => dp.FormaPago)
             .FirstOrDefaultAsync(v => v.IdVenta == id);
     }
-
     public async Task<Venta> CrearAsync(CrearVentaRequest request, short idUsuario)
     {
         await using var transaction = await _context.Database.BeginTransactionAsync();
@@ -106,6 +111,11 @@ public class VentaService : IVentaService
 
             decimal subtotalGeneral = 0;
 
+            // PAGOS 
+            if (request.Pagos == null || !request.Pagos.Any())
+                throw new Exception("Debe ingresar al menos una forma de pago.");
+            
+
             //---------------------------------------------------
             // DETALLES
             //---------------------------------------------------
@@ -153,8 +163,19 @@ public class VentaService : IVentaService
                 _context.DetallesVenta.Add(detalle);
 
                 // DESCONTAR STOCK
-
+                int stockAnterior = producto.StockActual;
                 producto.StockActual -= item.Cantidad;
+
+                await _movimientoStockService.RegistrarMovimientoAsync(
+                producto.IdProducto,
+                idUsuario,
+                null,
+                (short)venta.IdVenta,
+                "Venta",
+                item.Cantidad,
+                stockAnterior,
+                producto.StockActual,
+                $"Venta {venta.NumeroVenta}");
 
                 // ACUMULAR TOTAL
 
@@ -170,15 +191,47 @@ public class VentaService : IVentaService
             venta.NumeroVenta =
                 $"VENT-{DateTime.Now:yyyyMMdd}-{venta.IdVenta:D6}";
 
+            decimal totalPagado = request.Pagos.Sum(x => x.Importe);
+
+            if (totalPagado != venta.SubTotal)
+                throw new Exception("El importe pagado no coincide con el total de la venta.");
+
+            foreach (var pago in request.Pagos)
+            {
+                FormaPago? formaPago = await _context.FormasPago
+                    .FirstOrDefaultAsync(x => x.IdFormaPago == pago.IdFormaPago);
+
+                if (formaPago == null)
+                    throw new Exception("La forma de pago no existe.");
+
+                DetallePago detallePago = new()
+                {
+                    IdVenta = venta.IdVenta,
+                    IdFormaPago = pago.IdFormaPago,
+                    Importe = pago.Importe
+                };
+
+                _context.DetallesPago.Add(detallePago);
+            }
+
             await _context.SaveChangesAsync();
 
-            await _movimientoCajaService.RegistrarMovimientoAsync(
-            venta.IdCaja,
-            venta.IdVenta,
-            "Venta",
-            venta.NumeroVenta,
-            venta.SubTotal,
-            null);
+            foreach (var pago in request.Pagos)
+            {
+                FormaPago? formaPago = await _context.FormasPago
+                    .FirstAsync(x => x.IdFormaPago == pago.IdFormaPago);
+
+                if (formaPago.Nombre.Equals("Efectivo", StringComparison.OrdinalIgnoreCase))
+                {
+                    await _movimientoCajaService.RegistrarMovimientoAsync(
+                        venta.IdCaja,
+                        venta.IdVenta,
+                        "Venta",
+                        venta.NumeroVenta,
+                        pago.Importe,
+                        null);
+                }
+            }
 
             await transaction.CommitAsync();
 

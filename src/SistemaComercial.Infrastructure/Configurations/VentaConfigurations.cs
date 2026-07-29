@@ -49,5 +49,9 @@ public class VentaConfiguration : IEntityTypeConfiguration<Venta>
         builder.HasOne(x => x.Caja)
             .WithMany(c => c.Ventas)
             .HasForeignKey(x => x.IdCaja);
+            
+        builder.HasMany(x => x.DetallesVenta)
+            .WithOne(x => x.Venta)
+            .HasForeignKey(x => x.IdVenta);
     }
 }

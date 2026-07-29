@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace SistemaComercial.Domain.Entities;
 
 public class FormaPago
@@ -9,5 +11,6 @@ public class FormaPago
     public bool Estado { get; set; } = true;
 
     // Navegación
-     // public ICollection<DetallePago> DetallesPago { get; set; } = new List<DetallePago>();
+    [JsonIgnore]
+    public ICollection<DetallePago> DetallesPago { get; set; } = [];
 }

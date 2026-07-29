@@ -37,4 +37,7 @@ public class Usuario
 
     [JsonIgnore]
     public ICollection<Caja>? Cajas { get; set; } = new List<Caja>();
+
+    [JsonIgnore]
+    public ICollection<MovimientoStock>? MovimientosStock { get; set; } = new List<MovimientoStock>();
 }

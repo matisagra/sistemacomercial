@@ -26,4 +26,7 @@ public class Compra
 
     [JsonIgnore]
     public ICollection<DetalleCompra> Detalles { get; set; } = [];
+
+    [JsonIgnore]
+    public ICollection<MovimientoStock> MovimientosStock { get; set; } = [];
 }

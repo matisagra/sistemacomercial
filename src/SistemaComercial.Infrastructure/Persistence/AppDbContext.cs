@@ -26,7 +26,8 @@ public class AppDbContext : DbContext
     public DbSet<DetalleVenta> DetallesVenta => Set<DetalleVenta>();
     public DbSet<Caja> Cajas => Set<Caja>();
     public DbSet<MovimientoCaja> MovimientosCaja => Set<MovimientoCaja>();
-
+    public DbSet<MovimientoStock> MovimientosStock => Set<MovimientoStock>();
+    public DbSet<DetallePago> DetallesPago => Set<DetallePago>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
@@ -37,7 +38,8 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new DetalleVentaConfiguration());
         modelBuilder.ApplyConfiguration(new CajaConfiguration());
         modelBuilder.ApplyConfiguration(new MovimientoCajaConfiguration());
-        
+        modelBuilder.ApplyConfiguration(new MovimientoStockConfiguration());
+        modelBuilder.ApplyConfiguration(new DetallePagoConfiguration());
         base.OnModelCreating(modelBuilder);
 
         

@@ -58,6 +58,8 @@ builder.Services.AddScoped<ICompraService, CompraService>();
 builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<ICajaService, CajaService>();
 builder.Services.AddScoped<IMovimientoCajaService, MovimientoCajaService>();
+builder.Services.AddScoped<IMovimientoStockService, MovimientoStockService>();
+
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

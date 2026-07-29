@@ -28,8 +28,14 @@ public class Venta
     public string Estado { get; set; } = string.Empty;
 
     [JsonIgnore]
-    public ICollection<DetalleVenta> Detalles { get; set; } = [];
+    public ICollection<DetalleVenta> DetallesVenta { get; set; } = [];
 
     [JsonIgnore]
     public ICollection<MovimientoCaja> MovimientosCaja { get; set; } = [];
+
+    [JsonIgnore]
+    public ICollection<MovimientoStock> MovimientosStock { get; set; } = [];
+    
+    [JsonIgnore]
+    public ICollection<DetallePago> DetallesPago { get; set; } = [];
 }
