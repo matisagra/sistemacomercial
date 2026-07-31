@@ -28,6 +28,10 @@ public class AppDbContext : DbContext
     public DbSet<MovimientoCaja> MovimientosCaja => Set<MovimientoCaja>();
     public DbSet<MovimientoStock> MovimientosStock => Set<MovimientoStock>();
     public DbSet<DetallePago> DetallesPago => Set<DetallePago>();
+    public DbSet<Auditoria> Auditorias => Set<Auditoria>();
+
+    public DbSet<Configuracion> Configuraciones => Set<Configuracion>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
@@ -40,6 +44,10 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new MovimientoCajaConfiguration());
         modelBuilder.ApplyConfiguration(new MovimientoStockConfiguration());
         modelBuilder.ApplyConfiguration(new DetallePagoConfiguration());
+        modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
+        modelBuilder.ApplyConfiguration(new AuditoriaConfiguration());
+        modelBuilder.ApplyConfiguration(new ConfiguracionConfiguration());
+
         base.OnModelCreating(modelBuilder);
 
         

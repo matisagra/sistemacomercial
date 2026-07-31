@@ -16,53 +16,60 @@ public class AuthService : IAuthService
     }
 
     public async Task<Usuario?> LoginAsync(string nombreUsuario, string contraseña)
-{
-    var usuario = await _context.Usuarios
-        .Include(u => u.Rol)
-        .FirstOrDefaultAsync(u => u.NombreUsuario == nombreUsuario);
-
-    if (usuario == null)
     {
-        return null;
-    }
+        var usuario = await _context.Usuarios
+            .Include(u => u.Rol)
+            .FirstOrDefaultAsync(u => u.NombreUsuario == nombreUsuario);
 
-    if (!usuario.Estado)
-    {
-        return null;
-    }
-
-    if (usuario.BloqueadoHasta != null &&
-        usuario.BloqueadoHasta > DateTime.UtcNow)
-    {
-        return null;
-    }
-
-    bool passwordCorrecta = BCrypt.Net.BCrypt.Verify(
-        contraseña,
-        usuario.ContraseñaHash);
-
-
-    if (!passwordCorrecta)
-    {
-        usuario.IntentosFallidos++;
-
-        if (usuario.IntentosFallidos >= 3)
+        if (usuario == null)
         {
-            usuario.BloqueadoHasta = DateTime.UtcNow.AddMinutes(15);
-            usuario.IntentosFallidos = 0;
+            return null;
         }
+
+        Configuracion? configuracion = await _context.Configuraciones
+            .FirstOrDefaultAsync();
+
+        if (configuracion == null)
+        {
+            throw new Exception("No existe la configuración del sistema.");
+        }
+
+        if (!usuario.Estado)
+        {
+            return null;
+        }
+
+        if (usuario.BloqueadoHasta != null &&
+            usuario.BloqueadoHasta > DateTime.UtcNow)
+        {
+            return null;
+        }
+
+        bool passwordCorrecta = BCrypt.Net.BCrypt.Verify(
+            contraseña,
+            usuario.ContraseñaHash);
+
+        if (!passwordCorrecta)
+        {
+            usuario.IntentosFallidos++;
+
+            if (usuario.IntentosFallidos >= configuracion.IntentosLogin)
+            {
+                usuario.BloqueadoHasta = DateTime.UtcNow.AddMinutes(15);
+                usuario.IntentosFallidos = 0;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return null;
+        }
+
+        usuario.IntentosFallidos = 0;
+        usuario.BloqueadoHasta = null;
+        usuario.UltimoAcceso = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
 
-        return null;
+        return usuario;
     }
-
-    usuario.IntentosFallidos = 0;
-    usuario.BloqueadoHasta = null;
-    usuario.UltimoAcceso = DateTime.UtcNow;
-
-    await _context.SaveChangesAsync();
-
-    return usuario;
-}
 }
