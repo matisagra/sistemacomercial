@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+
+
 namespace SistemaComercial.Domain.Entities;
 
 public class Categoria
@@ -11,5 +14,6 @@ public class Categoria
     public bool Estado { get; set; } = true;
 
     // Navegación
+    [JsonIgnore]
     public ICollection<Producto> Productos { get; set; } = new List<Producto>();
 }

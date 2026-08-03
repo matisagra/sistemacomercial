@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace SistemaComercial.Domain.Entities;
 
 public class Proveedor
@@ -17,6 +19,9 @@ public class Proveedor
     public string? Observaciones { get; set; } = string.Empty;
     public bool Estado { get; set; } = true;
 
+    
     // Navegación
+
+    [JsonIgnore]
      public ICollection<Compra> Compras { get; set; } = new List<Compra>();
 }

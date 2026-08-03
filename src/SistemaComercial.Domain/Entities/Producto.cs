@@ -41,5 +41,6 @@ public class Producto
     [JsonIgnore]
     public ICollection<DetalleVenta> DetallesVenta { get; set; } = [];
 
+    [JsonIgnore]
     public ICollection<MovimientoStock> MovimientosStock { get; set; } = [];
 }

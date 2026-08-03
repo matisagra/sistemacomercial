@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace SistemaComercial.Domain.Entities;
 
 public class Marca
@@ -11,5 +13,6 @@ public class Marca
     public bool Estado { get; set; } = true;
 
     // Navegación
+    [JsonIgnore]
      public ICollection<Producto> Productos { get; set; } = new List<Producto>();
 }
