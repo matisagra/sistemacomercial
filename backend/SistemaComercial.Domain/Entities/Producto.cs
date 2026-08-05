@@ -6,12 +6,12 @@ public class Producto
 {
     public int IdProducto { get; set; }
 
-    public short IdCategoria { get; set; }
+    public short? IdCategoria { get; set; }
 
     [JsonIgnore]
     public Categoria? Categoria { get; set; }
 
-    public short IdMarca { get; set; }
+    public short? IdMarca { get; set; }
     
     [JsonIgnore]
     public Marca? Marca { get; set; }
@@ -27,6 +27,7 @@ public class Producto
 
     public decimal PrecioVenta { get; set; }
 
+    [JsonIgnore]
     public decimal MargenGanancia { get; set; }
 
     public int StockActual { get; set; }
