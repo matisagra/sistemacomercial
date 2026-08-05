@@ -10,8 +10,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useProductos } from "../hooks/useProductos";
-import { useVentas } from "../hooks/useVentas";
+import { useProductos } from "../../hooks/useProductos";
+import { useVentas } from "../../hooks/useVentas";
 
 interface QuickAction {
   label: string;

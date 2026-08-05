@@ -5,11 +5,15 @@ import {
     Routes,
 } from "react-router-dom";
 
-import { Login } from "@/features/Login";
-import { Dashboard } from "@/features/Dashboard";
+import { Login } from "@/features/Login/Login";
+import { Dashboard } from "@/features/Dashboard/Dashboard";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { Productos } from "@/features/Productos";
-import { ProductoForm } from "@/features/ProductoForm";
+import { Productos } from "@/features/Productos/Productos";
+import { ProductoForm } from "@/features/Productos/ProductoForm";
+import { ClienteForm } from "@/features/Clientes/ClienteForm";
+import { Clientes } from "@/features/Clientes/Clientes";
+import { ProveedorForm } from "@/features/Proveedores/ProveedorForm";
+import { Proveedores } from "@/features/Proveedores/Proveedores";
 
 interface Props {
     autenticado: boolean;
@@ -53,9 +57,19 @@ export function AppRouter({
                 <Route path="/productos" element={<Productos />} />
 
                 <Route path="/productos/nuevo" element={<ProductoForm />} />
-                
+
                 <Route path="/productos/editar/:id" element={<ProductoForm />} />
 
+
+                <Route path="/clientes" element={<Clientes />} />
+                <Route path="/clientes/nuevo" element={<ClienteForm />} />
+                <Route path="/clientes/editar/:id" element={<ClienteForm />} />
+
+                <Route path="/proveedores" element={<Proveedores />} />
+                <Route path="/proveedores/nuevo" element={<ProveedorForm />} />
+                <Route path="/proveedores/editar/:id" element={<ProveedorForm />} />
+            
+            
             </Routes>
 
         </BrowserRouter>
