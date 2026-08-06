@@ -22,9 +22,9 @@ public class Producto
     public string Nombre { get; set; } = string.Empty;
 
     public string? Descripcion { get; set; }
-
-    public decimal PrecioCompra { get; set; }
-
+    
+    public decimal PrecioCompra { get; set; } 
+    
     public decimal PrecioVenta { get; set; }
 
     [JsonIgnore]
@@ -32,7 +32,7 @@ public class Producto
 
     public int StockActual { get; set; }
 
-    public int StockMinimo { get; set; }
+    public int StockMinimo { get; set; } = 5;
 
     public bool Estado { get; set; }
 

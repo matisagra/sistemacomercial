@@ -14,6 +14,7 @@ import { ClienteForm } from "@/features/Clientes/ClienteForm";
 import { Clientes } from "@/features/Clientes/Clientes";
 import { ProveedorForm } from "@/features/Proveedores/ProveedorForm";
 import { Proveedores } from "@/features/Proveedores/Proveedores";
+import { Ventas } from "@/features/Ventas/Ventas";
 
 interface Props {
     autenticado: boolean;
@@ -68,7 +69,11 @@ export function AppRouter({
                 <Route path="/proveedores" element={<Proveedores />} />
                 <Route path="/proveedores/nuevo" element={<ProveedorForm />} />
                 <Route path="/proveedores/editar/:id" element={<ProveedorForm />} />
-            
+
+                <Route path="/ventas" element={<Ventas />} />
+                <Route path="/ventas/nueva" element={<Ventas />} />
+                    
+                
             
             </Routes>
 

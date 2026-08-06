@@ -226,7 +226,8 @@ export function Productos() {
                                     <th className="px-5 py-3 font-medium">Nombre</th>
                                     <th className="px-5 py-3 font-medium">Categoría</th>
                                     <th className="px-5 py-3 font-medium">Marca</th>
-                                    <th className="px-5 py-3 font-medium text-right">Precio</th>
+                                    <th className="px-5 py-3 font-medium text-right">P. Compra</th>
+                                    <th className="px-5 py-3 font-medium text-right">P. Venta</th>
                                     <th className="px-5 py-3 font-medium text-right">Stock</th>
                                     <th className="px-5 py-3 font-medium text-center">Estado</th>
                                     <th className="px-5 py-3 font-medium text-center">Editar</th>
@@ -236,7 +237,7 @@ export function Productos() {
                                 {productosFiltrados.length === 0 && (
                                     <tr>
                                         <td
-                                            colSpan={8}
+                                            colSpan={9}
                                             className="px-5 py-10 text-center text-zinc-500"
                                         >
                                             No se encontraron productos con los filtros aplicados.
@@ -269,6 +270,9 @@ export function Productos() {
                                             </td>
                                             <td className="px-5 py-3 text-zinc-400">
                                                 {nombreMarca(p.idMarca)}
+                                            </td>
+                                            <td className="px-5 py-3 text-right text-zinc-400">
+                                                {formatCurrency(p.precioCompra)}
                                             </td>
                                             <td className="px-5 py-3 text-right font-medium">
                                                 {formatCurrency(p.precioVenta)}

@@ -64,6 +64,9 @@ public class VentaService : IVentaService
             if (repetidos.Any())
                 throw new Exception("Hay productos repetidos.");
 
+            if (request.DescuentoPorcentaje < 0 || request.DescuentoPorcentaje > 100)
+                throw new Exception("El descuento debe estar entre 0 y 100.");
+
             //---------------------------------------------------
             // CLIENTE
             //---------------------------------------------------
@@ -102,7 +105,9 @@ public class VentaService : IVentaService
                 FechaHora = DateTime.UtcNow,
                 NumeroVenta = "",
                 Estado = "Registrada", //falta el enum
-                SubTotal = 0
+                SubTotal = 0,
+                Descuento = 0,
+                Total = 0
             };
 
             _context.Ventas.Add(venta);
@@ -156,7 +161,6 @@ public class VentaService : IVentaService
                     IdProducto = producto.IdProducto,
                     Cantidad = item.Cantidad,
                     PrecioUnitario = producto.PrecioVenta,
-                    Descuento = descuento,
                     Subtotal = subtotal
                 };
 
@@ -183,17 +187,33 @@ public class VentaService : IVentaService
             }
 
             //---------------------------------------------------
+            // DESCUENTO GENERAL Y TOTAL
+            //---------------------------------------------------
+
+            decimal montoDescuento = Math.Round(
+                subtotalGeneral * (request.DescuentoPorcentaje / 100m),
+                2,
+                MidpointRounding.AwayFromZero);
+
+            decimal totalVenta = Math.Round(
+                subtotalGeneral - montoDescuento,
+                2,
+                MidpointRounding.AwayFromZero);
+
+            //---------------------------------------------------
             // FINALIZAR VENTA
             //---------------------------------------------------
 
             venta.SubTotal = subtotalGeneral;
+            venta.Descuento = montoDescuento;
+            venta.Total = totalVenta;
 
             venta.NumeroVenta =
                 $"VENT-{DateTime.Now:yyyyMMdd}-{venta.IdVenta:D6}";
 
             decimal totalPagado = request.Pagos.Sum(x => x.Importe);
 
-            if (totalPagado != venta.SubTotal)
+            if (totalPagado != venta.Total)
                 throw new Exception("El importe pagado no coincide con el total de la venta.");
 
             foreach (var pago in request.Pagos)

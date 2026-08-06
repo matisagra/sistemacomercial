@@ -35,6 +35,14 @@ public class VentaConfiguration : IEntityTypeConfiguration<Venta>
             .HasColumnName("subtotal")
             .HasPrecision(12,2);
 
+        builder.Property(x => x.Total)
+            .HasColumnName("total")
+            .HasPrecision(12,2);
+
+        builder.Property(x => x.Descuento)
+            .HasColumnName("descuento")
+            .HasPrecision(12,2);
+
         builder.Property(x => x.Estado)
             .HasColumnName("estado");
 
@@ -53,5 +61,6 @@ public class VentaConfiguration : IEntityTypeConfiguration<Venta>
         builder.HasMany(x => x.DetallesVenta)
             .WithOne(x => x.Venta)
             .HasForeignKey(x => x.IdVenta);
+
     }
 }

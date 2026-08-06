@@ -3,7 +3,6 @@ import {
     obtenerProductos,
     crearProducto,
     actualizarProducto,
-    eliminarProducto,
 } from "@/api/productos";
 
 export function useProductos() {
@@ -27,18 +26,13 @@ export function useProductos() {
         onSuccess: invalidar,
     });
 
-    const eliminar = useMutation({
-        mutationFn: eliminarProducto,
-        onSuccess: invalidar,
-    });
+ 
 
     return {
         ...query,
         crearProducto: crear.mutateAsync,
         actualizarProducto: actualizar.mutateAsync,
-        eliminarProducto: eliminar.mutateAsync,
         creando: crear.isPending,
         actualizando: actualizar.isPending,
-        eliminando: eliminar.isPending,
     };
 }

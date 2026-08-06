@@ -21,7 +21,7 @@ public class Configuracion
     public bool PermitirStockNegativo { get; set; } = false;
 
     public bool SugerirPrecioVenta { get; set; } = true;
-    public int StockMinimoDefecto { get; set; } = 0;
+    public int StockMinimoDefecto { get; set; } = 5;
 
     public short IntentosLogin { get; set; } = 5;
 }

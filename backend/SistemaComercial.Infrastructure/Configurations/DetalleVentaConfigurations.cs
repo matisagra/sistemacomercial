@@ -27,10 +27,6 @@ public class DetalleVentaConfiguration : IEntityTypeConfiguration<DetalleVenta>
         builder.Property(x => x.PrecioUnitario)
             .HasColumnName("precio_unitario")
             .HasPrecision(12,2);
-        
-        builder.Property(x => x.Descuento)
-            .HasColumnName("descuento")
-            .HasPrecision(12,2);
 
         builder.Property(x => x.Subtotal)
             .HasColumnName("subtotal")
